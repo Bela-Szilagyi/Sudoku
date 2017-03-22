@@ -212,32 +212,63 @@ def save_sudoku(filename="sudoku.csv"):
 def load_sudoku(filename="sudoku.csv"):
     with open(filename, newline='') as csvfile:
         sudoku_reader = csv.reader(csvfile)
-        load_sudoku = []
+        load_sudoku = sudoku_reader
         for row in sudoku_reader:
             load_sudoku.append(row)
+    global sudoku
+    sudoku = load_sudoku[:]
     return load_sudoku
 
 
 def title():
     print('''
-        _        _                  _            _            _         _               
-       / /\     /\_\               /\ \         /\ \         /\_\      /\_\             
-      / /  \   / / /         _    /  \ \____   /  \ \       / / /  _  / / /         _   
-     / / /\ \__\ \ \__      /\_\ / /\ \_____\ / /\ \ \     / / /  /\_\\ \ \__      /\_\ 
-    / / /\ \___\\ \___\    / / // / /\/___  // / /\ \ \   / / /__/ / / \ \___\    / / / 
-    \ \ \ \/___/ \__  /   / / // / /   / / // / /  \ \_\ / /\_____/ /   \__  /   / / /  
-     \ \ \       / / /   / / // / /   / / // / /   / / // /\_______/    / / /   / / /   
- _    \ \ \     / / /   / / // / /   / / // / /   / / // / /\ \ \      / / /   / / /    
-/_/\__/ / /    / / /___/ / / \ \ \__/ / // / /___/ / // / /  \ \ \    / / /___/ / /     
-\ \/___/ /    / / /____\/ /   \ \___\/ // / /____\/ // / /    \ \ \  / / /____\/ /      
- \_____\/     \/_________/     \/_____/ \/_________/ \/_/      \_\_\ \/_________/       
+                                                                                                               
+                                                 dddddddd                                                      
+   SSSSSSSSSSSSSSS                               d::::::d                 kkkkkkkk                             
+ SS:::::::::::::::S                              d::::::d                 k::::::k                             
+S:::::SSSSSS::::::S                              d::::::d                 k::::::k                             
+S:::::S     SSSSSSS                              d:::::d                  k::::::k                             
+S:::::S            uuuuuu    uuuuuu      ddddddddd:::::d    ooooooooooo    k:::::k    kkkkkkkuuuuuu    uuuuuu  
+S:::::S            u::::u    u::::u    dd::::::::::::::d  oo:::::::::::oo  k:::::k   k:::::k u::::u    u::::u  
+ S::::SSSS         u::::u    u::::u   d::::::::::::::::d o:::::::::::::::o k:::::k  k:::::k  u::::u    u::::u  
+  SS::::::SSSSS    u::::u    u::::u  d:::::::ddddd:::::d o:::::ooooo:::::o k:::::k k:::::k   u::::u    u::::u  
+    SSS::::::::SS  u::::u    u::::u  d::::::d    d:::::d o::::o     o::::o k::::::k:::::k    u::::u    u::::u  
+       SSSSSS::::S u::::u    u::::u  d:::::d     d:::::d o::::o     o::::o k:::::::::::k     u::::u    u::::u  
+            S:::::Su::::u    u::::u  d:::::d     d:::::d o::::o     o::::o k:::::::::::k     u::::u    u::::u  
+            S:::::Su:::::uuuu:::::u  d:::::d     d:::::d o::::o     o::::o k::::::k:::::k    u:::::uuuu:::::u  
+SSSSSSS     S:::::Su:::::::::::::::uud::::::ddddd::::::ddo:::::ooooo:::::ok::::::k k:::::k   u:::::::::::::::uu
+S::::::SSSSSS:::::S u:::::::::::::::u d:::::::::::::::::do:::::::::::::::ok::::::k  k:::::k   u:::::::::::::::u
+S:::::::::::::::SS   uu::::::::uu:::u  d:::::::::ddd::::d oo:::::::::::oo k::::::k   k:::::k   uu::::::::uu:::u
+ SSSSSSSSSSSSSSS       uuuuuuuu  uuuu   ddddddddd   ddddd   ooooooooooo   kkkkkkkk    kkkkkkk    uuuuuuuu  uuuu
+                                                                                                               
+                  Welcome to the most awesome sudoku game ever, choose one from the menus below                                                                                        
+
     ''')
+
+def menu():
+  print("Load previous state")
+  print("Use predeterminated table (for the weak)")
+  print("Random generate sudoku")
+  choose = 1
+  while choose > 0 and choose < 4:
+    try:
+      choose = int(input())
+    except:
+      print("Wrong Input")
+      pass
+    if choose == 1:
+      return load_sudoku()
+    elif choose == 2:
+      return
+    elif choose == 3:
+      return
 
 
 # main
 def main():
     os.system('clear')
     title()
+    menu()
     print_sudoku()
     while 0 in sudoku:
         get_input()
