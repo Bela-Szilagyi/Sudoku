@@ -210,15 +210,20 @@ def save_sudoku(filename="sudoku.csv"):
 
 
 def load_sudoku(filename="sudoku.csv"):
-    with open(filename, newline='') as csvfile:
-        sudoku_reader = csv.reader(csvfile)
-        load_sudoku = []
-        for row in sudoku_reader:
-          for i in row:
-            load_sudoku.append(int(i))
-    global sudoku
-    sudoku = load_sudoku[:]
-    return
+    try:
+      with open(filename, newline='') as csvfile:
+          sudoku_reader = csv.reader(csvfile)
+          load_sudoku = []
+          for row in sudoku_reader:
+            for i in row:
+              load_sudoku.append(int(i))
+      global sudoku
+      sudoku = load_sudoku[:]
+      return
+    except FileNotFoundError:
+      print("You have no previous saved file")
+      menu()
+
 
 
 def title():
@@ -246,16 +251,17 @@ S:::::::::::::::SS   uu::::::::uu:::u  d:::::::::ddd::::d oo:::::::::::oo k:::::
     ''')
 
 def menu():
-  print("Load previous state")
-  print("Use predeterminated table (for the weak)")
-  print("Random generate sudoku")
+  print('{:^112}'.format("1 - Load saved game"))
+  print('{:^112}'.format("2 - Use predetermined table (for the weak)"))
+  print('{:^112}'.format("3 - Random generate sudoku"))
+  print('{:^112}'.format("4 - eXit - But mom, bedtime already?.. :("))
   choose = 1
   while choose > 0 and choose < 4:
     try:
       choose = int(input())
     except:
       print("Wrong Input")
-      pass
+      menu()
     if choose == 1:
       load_sudoku()
       return 
@@ -263,6 +269,8 @@ def menu():
       return
     elif choose == 3:
       return
+    elif choose == 4:
+      quit()
 
 
 # main
