@@ -1,4 +1,5 @@
 import os
+import csv
 
 # init - defining the puzzle to solve
 sudoku = [
@@ -101,7 +102,9 @@ def get_input(): # process the user input
         elif sudoku_input[0] == 'x' or sudoku_input[0] == 'X': # exit game
             quit()
         elif sudoku_input[0] == 's' or sudoku_input[0] == 'S': # to save game
-            save()
+            save_sudoku()
+            print('Good bye, see you next time!')
+            quit()
 
         if int(sudoku_input[1]) not in range(1,10): 
             print_sudoku()
@@ -198,6 +201,22 @@ def check(): # testing the filled sudoku
         # print('cube result ', result)
         
     return result
+
+
+def save_sudoku(filename="sudoku.csv"):
+    with open(filename, 'w', newline='') as csvfile:
+        sudoku_writer = csv.writer(csvfile)
+        sudoku_writer.writerow(sudoku)
+
+
+def load_sudoku(filename="sudoku.csv"):
+    with open(filename, newline='') as csvfile:
+        sudoku_reader = csv.reader(csvfile)
+        load_sudoku = []
+        for row in sudoku_reader:
+            load_sudoku.append(row)
+    return load_sudoku
+
 
 def title():
     print('''
