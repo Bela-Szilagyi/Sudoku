@@ -1,3 +1,5 @@
+import os
+
 # init - defining the puzzle to solve
 sudoku = [
 0,6,0,2,0,0,8,0,0,
@@ -45,6 +47,7 @@ for i in range(1,10):
 
 # printing
 def print_sudoku():
+    os.system('clear')
     print("   \033[1;32mA B C   D E F   G H I\033[;m") # columns
     for i in range(3):
         for row in range(0, 3):
@@ -71,9 +74,10 @@ def print_sudoku():
 
 def get_input(): # process the user input
     try:
-        sudoku_input = input("Next number (column row number - e.g. 'A 1 1' or 'a 1 1', to delete 'a 1 0' or 'a 1 -', for help 'a 1 h', to  quit 'x': ").split()
+        sudoku_input = input("Next number (column row number - e.g. 'A 1 1' or 'a 1 1', to delete 'a 1 0' or 'a 1 -', for help 'a 1 h', to  quit 'x', to save press s or S: ").split()
         slot = 0 # the place of the number
-        if sudoku_input[0] != 'a' and sudoku_input[0] != 'A' and sudoku_input[0] != 'b' and sudoku_input[0] != 'B' and sudoku_input[0] != 'c' and sudoku_input[0] != 'C' and sudoku_input[0] != 'd' and sudoku_input[0] != 'D' and sudoku_input[0] != 'e' and sudoku_input[0] != 'E' and sudoku_input[0] != 'f' and sudoku_input[0] != 'F' and sudoku_input[0] != 'g' and sudoku_input[0] != 'G' and sudoku_input[0] != 'h' and sudoku_input[0] != 'H' and sudoku_input[0] != 'i' and sudoku_input[0] != 'I' and sudoku_input[0] != 'x' and sudoku_input[0] != 'X':
+        if sudoku_input[0] != 'a' and sudoku_input[0] != 'A' and sudoku_input[0] != 'b' and sudoku_input[0] != 'B' and sudoku_input[0] != 'c' and sudoku_input[0] != 'C' and sudoku_input[0] != 'd' and sudoku_input[0] != 'D' and sudoku_input[0] != 'e' and sudoku_input[0] != 'E' and sudoku_input[0] != 'f' and sudoku_input[0] != 'F' and sudoku_input[0] != 'g' and sudoku_input[0] != 'G' and sudoku_input[0] != 'h' and sudoku_input[0] != 'H' and sudoku_input[0] != 'i' and sudoku_input[0] != 'I' and sudoku_input[0] != 'x' and sudoku_input[0] != 'X' and sudoku_input[0] != 's' and sudoku_input[0] != 'S':
+            print_sudoku()
             print('Wrong column, try again!')
             return
         elif sudoku_input[0] == 'a' or sudoku_input[0] == 'A':
@@ -96,13 +100,17 @@ def get_input(): # process the user input
             slot = 9         
         elif sudoku_input[0] == 'x' or sudoku_input[0] == 'X': # exit game
             quit()
-        
+        elif sudoku_input[0] == 's' or sudoku_input[0] == 'S': # to save game
+            save()
+
         if int(sudoku_input[1]) not in range(1,10): 
+            print_sudoku()
             print('Wrong row, try again!')
             return
         else:
             slot += (int(sudoku_input[1])-1)*9-1
             if slot in predefined:
+                print_sudoku()
                 print('Predefined number, try again!')
                 return
             elif sudoku[slot] != 0:
@@ -111,6 +119,7 @@ def get_input(): # process the user input
                     print_sudoku()
                     return
                 else:    
+                    print_sudoku()
                     print('Occupied place, try again!')
                     return
             elif sudoku_input[2] == 'h' or sudoku_input[2] == 'H': # help
@@ -118,14 +127,16 @@ def get_input(): # process the user input
                     print_sudoku()
                     return
             elif int(sudoku_input[2]) not in range(1, 10): 
+                    print_sudoku()
                     print('Wrong number, try again!')
-                    return     
+                    return
             else:
                 sudoku[slot] = int(sudoku_input[2])
                 print_sudoku()
     except (KeyboardInterrupt, SystemExit):
         raise
     except:
+        print_sudoku()
         print('Wrong input, try again')
 
 def test(list): # checks if the given 9 member list (row, column or block) is valid
@@ -188,11 +199,26 @@ def check(): # testing the filled sudoku
         
     return result
 
-
+def title():
+    print('''
+        _        _                  _            _            _         _               
+       / /\     /\_\               /\ \         /\ \         /\_\      /\_\             
+      / /  \   / / /         _    /  \ \____   /  \ \       / / /  _  / / /         _   
+     / / /\ \__\ \ \__      /\_\ / /\ \_____\ / /\ \ \     / / /  /\_\\ \ \__      /\_\ 
+    / / /\ \___\\ \___\    / / // / /\/___  // / /\ \ \   / / /__/ / / \ \___\    / / / 
+    \ \ \ \/___/ \__  /   / / // / /   / / // / /  \ \_\ / /\_____/ /   \__  /   / / /  
+     \ \ \       / / /   / / // / /   / / // / /   / / // /\_______/    / / /   / / /   
+ _    \ \ \     / / /   / / // / /   / / // / /   / / // / /\ \ \      / / /   / / /    
+/_/\__/ / /    / / /___/ / / \ \ \__/ / // / /___/ / // / /  \ \ \    / / /___/ / /     
+\ \/___/ /    / / /____\/ /   \ \___\/ // / /____\/ // / /    \ \ \  / / /____\/ /      
+ \_____\/     \/_________/     \/_____/ \/_________/ \/_/      \_\_\ \/_________/       
+    ''')
 
 
 # main
 def main():
+    os.system('clear')
+    title()
     print_sudoku()
     while 0 in sudoku:
         get_input()
