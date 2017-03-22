@@ -212,12 +212,13 @@ def save_sudoku(filename="sudoku.csv"):
 def load_sudoku(filename="sudoku.csv"):
     with open(filename, newline='') as csvfile:
         sudoku_reader = csv.reader(csvfile)
-        load_sudoku = sudoku_reader
+        load_sudoku = []
         for row in sudoku_reader:
-            load_sudoku.append(row)
+          for i in row:
+            load_sudoku.append(int(i))
     global sudoku
     sudoku = load_sudoku[:]
-    return load_sudoku
+    return
 
 
 def title():
@@ -242,7 +243,6 @@ S:::::::::::::::SS   uu::::::::uu:::u  d:::::::::ddd::::d oo:::::::::::oo k:::::
  SSSSSSSSSSSSSSS       uuuuuuuu  uuuu   ddddddddd   ddddd   ooooooooooo   kkkkkkkk    kkkkkkk    uuuuuuuu  uuuu
                                                                                                                
                   Welcome to the most awesome sudoku game ever, choose one from the menus below                                                                                        
-
     ''')
 
 def menu():
@@ -257,7 +257,8 @@ def menu():
       print("Wrong Input")
       pass
     if choose == 1:
-      return load_sudoku()
+      load_sudoku()
+      return 
     elif choose == 2:
       return
     elif choose == 3:
