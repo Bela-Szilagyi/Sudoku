@@ -170,7 +170,7 @@ def get_input(): # process the user input
     except (KeyboardInterrupt, SystemExit):
         raise
     except:
-        raise
+        #raise
         print_sudoku()
         print('Wrong input, try again')
 
@@ -600,7 +600,7 @@ def menu():
   print('{:^112}'.format("2 - Use predetermined table (for the weak)"))
   print('{:^112}'.format("3 - Random generate sudoku"))
   print('{:^112}'.format("4 - eXit - But mom, bedtime already?.. :("))
-  print('{:^112}'.format("5 - ÁJ EM DÖ ANTIPOPE"))
+  print('{:^112}'.format("5 - Random generate sudoku with difficulty levels"))
   choose = 1
   while choose > 0 and choose < 5:
     try:
@@ -618,9 +618,9 @@ def menu():
         predefined = []
         for i in range(81):
             sudoku.append(int(loaded[i]))
-        for i in range(82, 163):
+        for i in range(81, 162):
             solved.append(int(loaded[i]))
-        for i in range(164, len(loaded)):
+        for i in range(162, len(loaded)):
             predefined.append(int(loaded[i]))
         return
 
@@ -693,7 +693,7 @@ def submenu():
                     predefined.append(i)
             return
 
-        if chosoe == 3:
+        if choose == 3:
             global sudoku
             sudoku = create_filled_sudoku()
             number_of_holes = 0
