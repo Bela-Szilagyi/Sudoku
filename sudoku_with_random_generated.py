@@ -76,6 +76,15 @@ def print_sudoku():
                 print()
         print()
 
+def instructions():
+    print('''
+    column row number - e.g. 'A 1 1' or 'a 1 1’     return to menu press: m or M
+    to delete - e.g. 'a 1 0' or 'a 1 -'             to save and exit press: s or S
+    for help - e.g. 'a 1 h'                         return to menu and save press: ms or MS
+    
+                                     to quit press: x
+    ''')
+    get_input()
 
 def get_input(): # process the user input
     '''
@@ -85,9 +94,9 @@ def get_input(): # process the user input
             predefined.append(i)
     '''
     try:
-        sudoku_input = input("Next number (column row number - e.g. 'A 1 1' or 'a 1 1', to delete 'a 1 0' or 'a 1 -', for help 'a 1 h', to  quit 'x', to save press s or S: ").split()
+        sudoku_input = input("Next number (For instruction type ins): ").split()
         slot = 0 # the place of the number
-        if sudoku_input[0] != 'a' and sudoku_input[0] != 'A' and sudoku_input[0] != 'b' and sudoku_input[0] != 'B' and sudoku_input[0] != 'c' and sudoku_input[0] != 'C' and sudoku_input[0] != 'd' and sudoku_input[0] != 'D' and sudoku_input[0] != 'e' and sudoku_input[0] != 'E' and sudoku_input[0] != 'f' and sudoku_input[0] != 'F' and sudoku_input[0] != 'g' and sudoku_input[0] != 'G' and sudoku_input[0] != 'h' and sudoku_input[0] != 'H' and sudoku_input[0] != 'i' and sudoku_input[0] != 'I' and sudoku_input[0] != 'x' and sudoku_input[0] != 'X' and sudoku_input[0] != 's' and sudoku_input[0] != 'S':
+        if sudoku_input[0] != 'a' and sudoku_input[0] != 'A' and sudoku_input[0] != 'b' and sudoku_input[0] != 'B' and sudoku_input[0] != 'c' and sudoku_input[0] != 'C' and sudoku_input[0] != 'd' and sudoku_input[0] != 'D' and sudoku_input[0] != 'e' and sudoku_input[0] != 'E' and sudoku_input[0] != 'f' and sudoku_input[0] != 'F' and sudoku_input[0] != 'g' and sudoku_input[0] != 'G' and sudoku_input[0] != 'h' and sudoku_input[0] != 'H' and sudoku_input[0] != 'i' and sudoku_input[0] != 'I' and sudoku_input[0] != 'x' and sudoku_input[0] != 'X' and sudoku_input[0] != 's' and sudoku_input[0] != 'S' and sudoku_input[0] != 'm' and sudoku_input[0] != 'M' and sudoku_input[0] != 'ms' and sudoku_input[0] != 'MS' and sudoku_input[0] != 'mS' and sudoku_input[0] != 'Ms' and sudoku_input[0] != 'ins' and sudoku_input[0] != 'INS':
             print_sudoku()
             print('Wrong column, try again!')
             return
@@ -115,6 +124,14 @@ def get_input(): # process the user input
             save_sudoku()
             print('Good bye, see you next time!')
             quit()
+        elif sudoku_input[0] == 'm' or sudoku_input[0] == 'M': # return to main menu
+            main()
+        elif sudoku_input[0] == 'ms' or sudoku_input[0] == 'MS' or sudoku_input[0] == 'mS' or sudoku_input[0] == 'Ms': # return to main menu and save
+            save_sudoku()
+            main()
+        elif sudoku_input[0] == 'ins' or sudoku_input[0] == 'INS':
+            instructions()
+            return
 
         if int(sudoku_input[1]) not in range(1,10): 
             print_sudoku()
