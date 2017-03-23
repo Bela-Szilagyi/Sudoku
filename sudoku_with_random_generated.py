@@ -81,7 +81,7 @@ def instructions():
     column row number - e.g. 'A 1 1' or 'a 1 1’     return to menu press: m or M
     to delete - e.g. 'a 1 0' or 'a 1 -'             to save and exit press: s or S
     for help - e.g. 'a 1 h'                         return to menu and save press: ms or MS
-    
+
                                      to quit press: x
     ''')
     get_input()
@@ -595,16 +595,17 @@ def menu():
   print('{:^112}'.format("2 - Use predetermined table (for the weak)"))
   print('{:^112}'.format("3 - Random generate sudoku"))
   print('{:^112}'.format("4 - eXit - But mom, bedtime already?.. :("))
+  print('{:^112}'.format("5 - ÁJ EM DÖ ANTIPOPE"))
   choose = 1
-  while choose > 0 and choose < 4:
+  while choose > 0 and choose < 5:
     try:
-      choose = int(input())
+        choose = int(input())
     except:
-      print("Wrong Input")
-      menu()
+        print("Wrong Input")
+        menu()
     if choose == 1:
-      load_sudoku()
-      return 
+        load_sudoku()
+        return 
     elif choose == 2:
         global sudoku
         sudoku = sudoku_predetermined[:]
@@ -619,8 +620,31 @@ def menu():
         dig_holes(sudoku)
         return
     elif choose == 4:
-      quit()
+        quit()
+    elif choose == 5:
+        submenu()
 
+
+def submenu():
+    print('{:^112}'.format("1 - Easy"))
+    print('{:^112}'.format("2 - Medium"))
+    print('{:^112}'.format("3 - Hard"))
+    print('{:^112}'.format("4 - NIGHTMARE"))
+    choose = 1
+    while choose > 0 and choose > 4:
+        try:
+            choose = int(input())
+        except:
+            print("Wrong Input")
+            menu()
+        if choose == 1:
+            return
+        if choose == 2:
+            return
+        if chosoe == 3:
+            return
+        if choose == 4:
+            return
 
 # main
 def main():
