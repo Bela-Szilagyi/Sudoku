@@ -31,8 +31,10 @@ solved_predetermined = [
 
 
 def color_print(cp): # prints the predefined numbers in red, the others in black
-    a="\033[1;31m" # prints in baéd and red color
+    a="\033[1;31m" # prints in bold and red color
     b="\033[;m" # end of printing in red color
+    c="\033[1m" # prints in bold 
+    d="\033[0;0m" # end of print in bold
     '''
     predefined = [] # creates a list thet has the index of the predefined numbers
     for i in range(len(sudoku)):
@@ -44,6 +46,8 @@ def color_print(cp): # prints the predefined numbers in red, the others in black
         print(a+str(sudoku[cp])+b, end='')
     elif sudoku[cp] == 0:
         print('-', end='')
+    elif sudoku.count(sudoku[cp]) == 9:
+        print(c+str(sudoku[cp])+d, end='')
     else:
         print(sudoku[cp], end='')
 
@@ -477,6 +481,7 @@ def dig_holes(sudoku_to_dig):
             # input()
     printsudoku(sudoku_generated)
     print(slots)
+    return slots
 
  
 def test(list): # checks if the given 9 member list (row, column or block) is valid
@@ -547,19 +552,19 @@ def save_sudoku(filename="sudoku.csv"):
     with open(filename, 'w', newline='') as csvfile:
         sudoku_writer = csv.writer(csvfile)
         sudoku_writer.writerow(sudoku)
+        sudoku_writer.writerow(solved)
+        sudoku_writer.writerow(predefined)
 
 
 def load_sudoku(filename="sudoku.csv"):
     try:
       with open(filename, newline='') as csvfile:
-          sudoku_reader = csv.reader(csvfile)
-          load_sudoku = []
-          for row in sudoku_reader:
+        sudoku_reader = csv.reader(csvfile)
+        load_sudoku = []
+        for row in sudoku_reader:
             for i in row:
-              load_sudoku.append(int(i))
-      global sudoku
-      sudoku = load_sudoku[:]
-      return
+                load_sudoku.append(int(i))
+      return load_sudoku
     except FileNotFoundError:
       print("You have no previous saved file")
       menu()
@@ -604,8 +609,21 @@ def menu():
         print("Wrong Input")
         menu()
     if choose == 1:
-        load_sudoku()
-        return 
+        loaded = load_sudoku()
+        global sudoku
+        sudoku = []
+        global solved
+        solved = []
+        global predefined
+        predefined = []
+        for i in range(81):
+            sudoku.append(int(loaded[i]))
+        for i in range(82, 163):
+            solved.append(int(loaded[i]))
+        for i in range(164, len(loaded)):
+            predefined.append(int(loaded[i]))
+        return
+
     elif choose == 2:
         global sudoku
         sudoku = sudoku_predetermined[:]
@@ -613,16 +631,28 @@ def menu():
         global solved
         solved = solved_predetermined[:]
         
+        global predefined
+        predefined = [] # creates a list thet has the index of the predefined numbers
+        for i in range(len(sudoku)):
+            if sudoku[i] != 0:
+                predefined.append(i)
+
         return
     elif choose == 3:
         global sudoku
         sudoku = create_filled_sudoku()
         dig_holes(sudoku)
+        global predefined
+        predefined = [] # creates a list thet has the index of the predefined numbers
+        for i in range(len(sudoku)):
+            if sudoku[i] != 0:
+                predefined.append(i)
         return
     elif choose == 4:
         quit()
     elif choose == 5:
         submenu()
+        return
 
 
 def submenu():
@@ -630,20 +660,62 @@ def submenu():
     print('{:^112}'.format("2 - Medium"))
     print('{:^112}'.format("3 - Hard"))
     print('{:^112}'.format("4 - NIGHTMARE"))
-    choose = 1
-    while choose > 0 and choose > 4:
+    choose = 0
+    while choose not in range(1, 4):
         try:
             choose = int(input())
         except:
             print("Wrong Input")
             menu()
         if choose == 1:
+            global sudoku
+            sudoku = create_filled_sudoku()
+            number_of_holes = 0
+            while number_of_holes not in range(32, 42):
+                number_of_holes = dig_holes(sudoku)
+            global predefined
+            predefined = [] # creates a list thet has the index of the predefined numbers
+            for i in range(len(sudoku)):
+                if sudoku[i] != 0:
+                    predefined.append(i)
             return
+
         if choose == 2:
+            global sudoku
+            sudoku = create_filled_sudoku()
+            number_of_holes = 0
+            while number_of_holes not in range(42, 56):
+                number_of_holes = dig_holes(sudoku)
+            global predefined
+            predefined = [] # creates a list thet has the index of the predefined numbers
+            for i in range(len(sudoku)):
+                if sudoku[i] != 0:
+                    predefined.append(i)
             return
+
         if chosoe == 3:
+            global sudoku
+            sudoku = create_filled_sudoku()
+            number_of_holes = 0
+            while number_of_holes not in range(56, 59):
+                number_of_holes = dig_holes(sudoku)
+            global predefined
+            predefined = [] # creates a list thet has the index of the predefined numbers
+            for i in range(len(sudoku)):
+                if sudoku[i] != 0:
+                    predefined.append(i)
             return
         if choose == 4:
+            global sudoku
+            sudoku = create_filled_sudoku()
+            number_of_holes = 0
+            while number_of_holes not in range(60, 64):
+                number_of_holes = dig_holes(sudoku)
+            global predefined
+            predefined = [] # creates a list thet has the index of the predefined numbers
+            for i in range(len(sudoku)):
+                if sudoku[i] != 0:
+                    predefined.append(i)
             return
 
 # main
@@ -651,14 +723,14 @@ def main():
     os.system('clear')
     title()
     menu()
-
+    '''
     global predefined
     predefined = [] # creates a list thet has the index of the predefined numbers
     for i in range(len(sudoku)):
         if sudoku[i] != 0:
             predefined.append(i)
     # print(predefined)
-
+    '''
     # sudoku_solver(sudoku)
 
     print_sudoku()
